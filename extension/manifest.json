@@ -1,0 +1,23 @@
+{
+    "name": "Table Catcher",
+    "version": "1.0.0",
+    "description": "Extracting Data Tables from Websites",
+    "manifest_version": 3,
+    "author": "DE LA Enjoyers: Eray Enes Giray",
+    "action":{
+        "default_popup": "index.html",
+        "default_title": "The Table Catcher Extension"
+    },
+    "host_permissions":
+    [
+        "http://127.0.0.1:8000/"
+    ],
+    "permissions": 
+    [  
+        "tabs",
+        "scripting",
+        "storage", 
+        "declarativeContent", 
+        "activeTab"
+    ]
+}
