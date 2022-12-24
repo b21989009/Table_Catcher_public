@@ -1,4 +1,4 @@
-"""mysite URL Configuration
+"""URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -10,7 +10,7 @@ Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the include() function: from django.urls import include, path
+    1. Import include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
@@ -18,12 +18,10 @@ from django.contrib import admin
 from django.urls import path, re_path
 from . import views
 
-from django.conf.urls.static import static
-from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),    # http://127.0.0.1:8000/
-    path('send_url/', views.send_url, name='send_url'),   # POST request
-    re_path(r'^get/$', views.get_data, name='get_data'),   # http://127.0.0.1:8000/get/?topic=https://coinmarketcap.com/
+    path('', views.documentation, name='documentation'),    # http://127.0.0.1:8000/  or https://table-catcher.herokuapp.com/
+    path('scan_tables/', views.scan_tables, name='scan_tables'),   # POST request
+    # re_path(r'^get/$', views.get_data, name='get_data'),   # http://127.0.0.1:8000/get/?topic=https://coinmarketcap.com/
 ]
