@@ -2,7 +2,9 @@ from django.http import JsonResponse, HttpResponse
 import pandas as pd
 import ssl
 import json
+import os
 from django.views.decorators.csrf import csrf_exempt
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def documentation(request):
@@ -95,13 +97,13 @@ def scrape_tables(html, is_localhost):
                 cleanup_table(scraper[i])
 
                 # save each table .csv
-                scraper[i].to_csv("backend/static/fetched_tables/table_" + str(data_table_count) + ".csv", encoding='utf-8', index=False)
-
-                # example static link to get tables: http://127.0.0.1:8000/static/fetched_tables/table_1.csv
                 if is_localhost:
+                    scraper[i].to_csv("backend/static/fetched_tables/table_" + str(data_table_count) + ".csv", encoding='utf-8', index=False)
                     download_links.append("http://127.0.0.1:8000/static/fetched_tables/table_" + str(data_table_count) + ".csv")
+                    # example static link to get tables: http://127.0.0.1:8000/static/fetched_tables/table_1.csv
                 else:
-                    download_links.append("https://table-catcher.herokuapp.com/static/fetched_tables/table_" + str(data_table_count) + ".csv")
+                    scraper[i].to_csv(str(os.path.join(BASE_DIR, 'static/fetched_tables/table_')) + str(data_table_count) + ".csv", encoding='utf-8', index=False)
+                    download_links.append("https://tablecatcher.azurewebsites.net/static/fetched_tables/table_" + str(data_table_count) + ".csv")
 
         return download_links, caught_table_indices
 

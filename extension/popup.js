@@ -65,7 +65,7 @@ $(function(){
 					let data_to_send = JSON.stringify({ 'page_url': activeTab.url, 'page_html': res[0].result, 'tag': 'whatever'});
 					let posting = $.ajax({
 						type: "POST",
-						url: "https://table-catcher.herokuapp.com/scan_tables/",
+						url: "https://tablecatcher.azurewebsites.net/scan_tables/",
 						data: data_to_send,
 						processData: false,
 						datatype: "jsonp",

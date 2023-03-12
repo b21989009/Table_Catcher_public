@@ -17,7 +17,7 @@ https://drive.google.com/drive/folders/1xB9fLiRFME2lGquD1h1NbtHFX_4bdvfv?usp=sha
 ## how to run the Extension:
 
 
-### Recommended way (with connection to the Backend that is deployed on Heroku server):
+### Recommended way (with connection to the Backend that is deployed on Azure server):
 
 - download our "extension" folder
 - launch Google Chrome and go to chrome://extensions/
@@ -26,7 +26,7 @@ https://drive.google.com/drive/folders/1xB9fLiRFME2lGquD1h1NbtHFX_4bdvfv?usp=sha
 - choose “extension” folder
 - pin the TableCatcher icon to toolbar. open a website and click the icon.
 
-- ##### (No need for backend installation, since it is deployed and always running on https://table-catcher.herokuapp.com/ .)
+- ##### (No need for backend installation, since it is deployed and always running on https://tablecatcher.azurewebsites.net .)
 
 <br />
 <br />

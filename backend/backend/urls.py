@@ -15,13 +15,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, re_path
 from . import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.documentation, name='documentation'),    # http://127.0.0.1:8000/  or https://table-catcher.herokuapp.com/
+    path('', views.documentation, name='documentation'),    # http://127.0.0.1:8000/  or https://tablecatcher.azurewebsites.net
     path('scan_tables/', views.scan_tables, name='scan_tables'),   # POST request
     # re_path(r'^get/$', views.get_data, name='get_data'),   # http://127.0.0.1:8000/get/?topic=https://coinmarketcap.com/
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_on_heroku
 import dj_database_url
 from pathlib import Path
 
@@ -31,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_COOKIE_SECURE = False
-CSRF_TRUSTED_ORIGINS = ['https://table-catcher.herokuapp.com/', 'http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['https://tablecatcher.azurewebsites.net/', 'https://table-catcher.herokuapp.com/', 'http://127.0.0.1:8000/']
 
 # Application definition
 
@@ -119,11 +118,10 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+# Static files (CSV, CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = "/backend/static/"
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = "/backend/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'backend/static'),
 ]
@@ -131,4 +129,4 @@ STATICFILES_DIRS = [
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520
 
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
