@@ -30,11 +30,12 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_COOKIE_SECURE = False
-CSRF_TRUSTED_ORIGINS = ['https://tablecatcher.azurewebsites.net/', 'https://table-catcher.herokuapp.com/', 'http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['https://tablecatcher.azurewebsites.net/', 'http://127.0.0.1:8000/']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -127,6 +132,3 @@ STATICFILES_DIRS = [
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520
-
-
-# django_on_heroku.settings(locals())

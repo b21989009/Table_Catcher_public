@@ -14,18 +14,15 @@
             "128": "/icons/128.png"
         }
     },
-    "host_permissions":
-    [
-        "http://127.0.0.1:8000/",
-        "https://table-catcher.herokuapp.com/"
-    ],
+    "host_permissions": ["<all_urls>"],
     "permissions": 
     [  
         "tabs",
         "scripting",
         "storage", 
         "declarativeContent", 
-        "activeTab"
+        "activeTab",
+        "contextMenus"
     ],
     "icons": {
         "16": "/icons/16.png",
@@ -33,10 +30,15 @@
         "48": "/icons/48.png",
         "128": "/icons/128.png"
     },
+    "background": {
+        "service_worker": "background.js"
+    },
     "content_scripts":[
     {
         "matches":["<all_urls>"],
-        "js":["content_script.js"]
+        "js":["jquery-3.1.0.min.js", "toastr.min.js", "html2canvas.js", "content_script.js"],
+        "css": ["toastr.min.css"],
+        "all_frames": true
     }
     ]
 }

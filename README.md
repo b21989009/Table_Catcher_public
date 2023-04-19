@@ -19,7 +19,7 @@ https://drive.google.com/drive/folders/1xB9fLiRFME2lGquD1h1NbtHFX_4bdvfv?usp=sha
 
 ### Recommended way (with connection to the Backend that is deployed on Azure server):
 
-- download our "extension" folder
+- download the "extension" folder
 - launch Google Chrome and go to chrome://extensions/
 - enable developer mode
 - click “load unpacked”
@@ -42,7 +42,7 @@ In terminal:
 
 #### Run the Extension:
 
-- download our "extension_local" folder
+- download the "extension" folder
 - launch Google Chrome and go to chrome://extensions/
 - enable developer mode
 - click “load unpacked”
@@ -56,7 +56,7 @@ In terminal:
 
 
 Hacettepe University | Computer Engineering Department 
-| BBM479 Design Project 
+| BBM480 Design Project 
 
 #### Group Members
 Eray Dindaş

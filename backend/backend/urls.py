@@ -12,6 +12,7 @@ Class-based views
 Including another URLconf
     1. Import include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+    
 """
 
 from django.contrib import admin
@@ -23,7 +24,10 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.documentation, name='documentation'),    # http://127.0.0.1:8000/  or https://tablecatcher.azurewebsites.net
+    path('', views.documentation, name='documentation'),    # http://127.0.0.1:8000/  or https://tablecatcher.azurewebsites.net/
     path('scan_tables/', views.scan_tables, name='scan_tables'),   # POST request
+    path('table_from_screenshot/', views.table_from_screenshot, name='table_from_screenshot'),  # POST request
+    path('test_connection/', views.test_connection, name='test_connection'),
     # re_path(r'^get/$', views.get_data, name='get_data'),   # http://127.0.0.1:8000/get/?topic=https://coinmarketcap.com/
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

@@ -52,6 +52,18 @@ input{
     padding: 0.65rem 1rem;
     border-width: thin;
 }
+.screenshot_button{
+    display: inline-block;
+    background-color: #4fdbb6;
+    color: #fff;
+    border-radius: 0.6rem;
+    border-color: #4fdbb1;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.65rem 1rem;
+    border-width: thin;
+    margin-bottom: 20px;
+}
 .download_button{
     margin-left: 10px;
 }

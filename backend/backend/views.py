@@ -3,6 +3,13 @@ import pandas as pd
 import ssl
 import json
 import os
+import base64
+import time
+
+# https://github.com/xavctn/img2table
+from img2table.document import Image
+from img2table.ocr import AzureOCR
+
 from django.views.decorators.csrf import csrf_exempt
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -10,6 +17,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def documentation(request):
     print(request)
     return HttpResponse("Table Catcher Documentation page. For testing if server works, for Documentation. ")
+
+
+def test_connection(request):
+    print(request)
+    return JsonResponse({'check_connection': 'connected'})
 
 
 """
@@ -121,3 +133,64 @@ def cleanup_table(table):
 
     # remove columns named "Unnamed: ..."
     table.drop(list(table.filter(regex='Unnamed:')), axis=1, inplace=True)
+
+
+@csrf_exempt
+def table_from_screenshot(request):
+
+    received_data = json.loads(request.body)
+    print('Screenshot from frontend.')
+
+    is_localhost = "127.0.0.1:8000" in request.build_absolute_uri()
+
+    download_links_ = catch_tables_from_screenshot(received_data["screenshot"], is_localhost)
+
+    data = {
+        'download_links': download_links_,
+    }
+    print('Json Data to be sent: ', data)
+    return JsonResponse(data)
+
+
+def catch_tables_from_screenshot(base64_image_string, is_localhost):
+
+    download_links_ = []
+    saving_directory = str(os.path.join(BASE_DIR, 'static/screenshot_tables/'))
+    download_directory = "https://tablecatcher.azurewebsites.net/static/screenshot_tables/"
+    if is_localhost:
+        saving_directory = "backend/static/screenshot_tables/"
+        download_directory = "http://127.0.0.1:8000/static/screenshot_tables/"
+
+    # create image file
+    img_data = base64.b64decode(base64_image_string.split(",")[1])  # because starts like "data:image/png;base64,iVB..."
+    img_file = open(saving_directory + 'screenshot_image' + '.png', 'wb')
+    img_file.write(img_data)
+    img_file.close()
+
+    ocr = AzureOCR(endpoint="https://delavision.cognitiveservices.azure.com/", subscription_key="6e9b93fe9de5428b9fbfd63dd1349f91")
+
+    image = Image(saving_directory + "screenshot_image.png")
+    start = time.time()
+
+    try:
+
+        extracted_tables = image.extract_tables(ocr=ocr, implicit_rows=True, borderless_tables=True, min_confidence=5)
+        if extracted_tables:  # if not empty list
+            # without the if, creates an empty Excel file
+            # one worksheet (excel page) per table, in single file
+            image.to_xlsx(dest=saving_directory + "table.xlsx", ocr=ocr, implicit_rows=True, borderless_tables=True, min_confidence=5)
+            download_links_.append(download_directory + "table.xlsx")
+
+            # one csv file per table. (screenshot might include or interpreted as including multiple tables).
+            for n, extracted_table in enumerate(extracted_tables):
+                extracted_table.df.to_csv(saving_directory + "table_" + str(n+1) + ".csv", encoding='utf-8', index=False)
+                download_links_.append(download_directory + "table_" + str(n+1) + ".csv")
+
+        os.remove(saving_directory + "screenshot_image.png")
+        print("* * * took ", str(int(time.time() - start)), " seconds. success * * * ")
+        return download_links_
+
+    except Exception:
+        # print(traceback.format_exc())
+        print("* * * took ", str(int(time.time() - start)), " seconds. NO Table ! * * * ")
+        return []

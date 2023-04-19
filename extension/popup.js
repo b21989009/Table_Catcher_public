@@ -1,60 +1,34 @@
+// This document is the extension pop-up itself. The console is extension's console.
+// The Popup is reloaded everytime you open it.
+// Popup code cannot work after popup is closed. But before that, you can send messages to other scripts to perform functions.
 
-$(function(){
+let server_host = "";
 
-	// unused button
-	/*
-	$('#myButton').click(function(){
+$(function(){   // makes sure to start executing after popup's DOM is fully loaded.
 
-		(async () => {
-			const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
-			let result;
-			try {
-			  [{result}] = await chrome.scripting.executeScript({
-				target: {tabId: tab.id},
-				func: () => document.body.innerHTML,
-			  });
-			} catch (e) {
-			  document.body.textContent = 'Cannot access page';
-			  return;
-			}
-
-			console.log(result.slice(0,100) + "..."); // only show a snippet for now
-			
-		  })();
-		
-		///const res=await fetch ("https://api.coronavirus.data.gov.uk/v1/data");
-		///const record=await res.json();
-	
-		var server_host = 'http://127.0.0.1:8000/';
-		
-		fetch(server_host)
-		.then(response => response.json())
-		//.then(response => sendResponse({farewell: response}))   // ReferenceError: sendResponse is not defined
-		.catch(error => console.log(error))
-
-
-		//chrome.runtime.onMessage.addListener(
-		//function(request, sender, sendResponse) {
-		//		var url = server_host +  '/get/' ;
-		//		return true;  // Will respond asynchronously.
-		//});
-		
+	// Check if local server (localhost) is available; else, we will use Azure.
+	let checking_local_connection = $.ajax({
+		type: "GET",
+		url: "http://127.0.0.1:8000/test_connection/",
+		success: function(json_response_from_backend){
+			console.log("connected to localhost server");
+			server_host = "http://127.0.0.1:8000/";
+		},
+		error: function(){
+			console.log("not connected to localhost server")
+			server_host = "https://tablecatcher.azurewebsites.net/";
+		},
 	});
-	*/
 
 
 	$('#scan_button_').click(function(){
 		document.getElementById('download_links_table').innerHTML = "";
 
-		//console.log(document.getElementsByTagName('html')[0].innerHTML);
-		// this document is the extension pop-up itself. the console is extension's console.
-
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			let activeTab = tabs[0]; /*** This object does not have like "document" or "html" info in it. */
 
 			chrome.scripting.executeScript(
 				{
-				target: {tabId: activeTab.id},
+				target: {tabId: tabs[0].id},
 
 				// "function" works as if it is in content_script.js. "document" refers to the active tab page.
 				function: function(){return document.getElementsByTagName('html')[0].innerHTML;}
@@ -62,10 +36,11 @@ $(function(){
 				(res) => {
 
 					// send POST request to backend
-					let data_to_send = JSON.stringify({ 'page_url': activeTab.url, 'page_html': res[0].result, 'tag': 'whatever'});
+					let data_to_send = JSON.stringify({ 'page_url': tabs[0].url, 'page_html': res[0].result, 'tag': 'whatever'});
+					let send_url = server_host + "scan_tables/";
 					let posting = $.ajax({
 						type: "POST",
-						url: "https://tablecatcher.azurewebsites.net/scan_tables/",
+						url: send_url,
 						data: data_to_send,
 						processData: false,
 						datatype: "jsonp",
@@ -74,7 +49,7 @@ $(function(){
 						success: function(json_response_from_backend){
 							console.log("success");
 							createTable_for_DownloadLinks(json_response_from_backend.download_links);
-							embed_downloadLinks_on_tables_on_page(json_response_from_backend)
+							embed_downloadLinks_on_tables_on_page(json_response_from_backend);
 							return "success";
 						},
 						error: function(){console.log("error"); toastr.error("Failed connect to Server or Not Responding."); return"error";},
@@ -85,8 +60,8 @@ $(function(){
 
 
 			function embed_downloadLinks_on_tables_on_page(downloadLinks_and_tableIndices){
-				chrome.tabs.sendMessage(activeTab.id, {data: downloadLinks_and_tableIndices}, function(response) {
-						console.log('* * *   sent data to content_script.js   * * * ');
+				chrome.tabs.sendMessage(tabs[0].id, {data: downloadLinks_and_tableIndices, message:"sending_links"}, function(response) {
+						console.log(' sent data to content_script.js ');
 				});
 			}
 
@@ -146,5 +121,50 @@ $(function(){
 
 	});
 
+
+
+	$('#screenshot_button_').click(function(){
+
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+
+			chrome.tabs.sendMessage(tabs[0].id, {message: "take_screenshot", host_domain: server_host}, function(response) {
+				console.log('sent command to content_script.js');
+
+				chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+					if (request.message_me === true) {
+						console.log(request.message_);
+					}
+				});
+			});
+
+		});
+
+
+	});
+
 });
 
+
+/* JUST FOR TESTING SOME STUFF.
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // for resetting some stuff when it will be closed. Controlled by background script.
+    // chrome.runtime.connect({ name: "popup_opened" });
+
+    const startButton = document.getElementById('captureButton');
+    startButton.addEventListener('click', () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { command: 'startHighlighting' });
+        });
+    });
+
+    // DOES NOT WORK.
+    intention was: Prevent the shift of focus from the popup to the page (when clicked on page.) Thus prevent the popup from closing.
+    setTimeout(function() {
+        document.body.focus();
+    }, 0);
+
+});
+
+ */
