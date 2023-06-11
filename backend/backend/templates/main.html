@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Catcher </title>
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'website_style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Hacettepe University Computer Engineering - Design Project - Table Catcher</h1>
+    </header>
+    <div class="page-loader"></div>
+    <div class="content">
+        <br>
+        <br>
+        <div class="button-container">
+            <button onclick="window.location.href='{% url 'team' %}'">Meet our Team</button>
+            <button onclick="window.location.href='{% url 'project' %}'">Project Concept</button>
+            <button onclick="window.location.href='{% url 'guide' %}'">Guide</button>
+            <button onclick="window.location.href='{% url 'video' %}'">Demo Video</button>
+        </div>
+        <div class="image-container">
+            <figure>
+                <img src="{% static 'icons/logo.png' %}" alt="logo" style="width: 450px">
+                <figcaption class="image-caption">Table Catcher</figcaption>
+            </figure>
+        </div>
+
+    </div>
+
+    <footer style="padding-top: 0">
+        <p>Copyright &copy; 2023 Hacettepe University - Computer Engineering</p>
+    </footer>
+</body>
+</html>

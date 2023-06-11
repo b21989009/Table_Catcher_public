@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Catcher Project</title>
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'website_style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Hacettepe University Computer Engineering - Design Project - Table Catcher</h1>
+    </header>
+    <div class="page-loader"></div>
+    <div class="content">
+        <div class="image-container2">
+            <figure>
+                <img src="{% static 'icons/logo.png' %}" alt="logo" width="200">
+                <figcaption class="image-caption">Table Catcher</figcaption>
+            </figure>
+        </div>
+
+        <div class="button-container">
+            <button onclick="window.location.href='{% url 'main' %}'">Home</button>
+            <button onclick="window.location.href='{% url 'team' %}'">Meet our Team</button>
+            <button style="background-color: darkslategray; border-bottom: 5px solid black;">Project Concept</button>
+            <button onclick="window.location.href='{% url 'guide' %}'">Guide</button>
+            <button onclick="window.location.href='{% url 'video' %}'">Demo Video</button>
+        </div>
+
+        <div class="promo">
+            <h1> What is our Concept?</h1>
+            <p>There is a vast amount of data in the world of the internet. 
+                We may want to just copy-paste some tabular data from a website,
+                yet it is hard to keep the structure and format of the cells and
+                data when the table is copy-pasted as text. We are aiming to efficiently
+                extract these tables in a standard, editable DataFrame format. They provide a clear and concise way to display data,
+                making it easier for readers to understand and interpret the information.
+                For this purpose, we have focused on developing a web browser extension called ''Table Catcher''.</p>
+        </div>
+        <div class="image-container-sample">
+            <figure>
+                <img src="{% static 'icons/Sample_Usage.PNG' %}"  alt="sample">
+            </figure>
+        </div>
+        <div class="image-container-sample2">
+                <img src="{% static 'icons/scan.jpg' %}" alt="scan method">
+                <img src="{% static 'icons/vision.jpg' %}" alt="vision method">
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright &copy; 2023 Hacettepe University - Computer Engineering</p>
+    </footer>
+</body>
+</html>
