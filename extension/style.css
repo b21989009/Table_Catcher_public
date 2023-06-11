@@ -67,7 +67,12 @@ input{
 .download_button{
     margin-left: 10px;
 }
-
+.documentation_link_button{
+    font-size: 1.7rem;
+    color: mediumslateblue;
+    right: 15px;  top: 15px;
+    position: absolute;
+}
 /*
 .button{
     width: 200px;

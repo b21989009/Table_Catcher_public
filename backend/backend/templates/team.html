@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Catcher Team</title>
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'website_style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Hacettepe University Computer Engineering - Design Project - Table Catcher</h1>
+    </header>
+    <div class="page-loader"></div>
+    <div class="content">
+        <div class="image-container2">
+            <figure>
+                <img src="{% static 'icons/logo.png' %}" alt="logo" width="200">
+                <figcaption class="image-caption">Table Catcher</figcaption>
+            </figure>
+        </div>
+        <div class="button-container">
+            <button onclick="window.location.href='{% url 'main' %}'">Home</button>
+            <button style="background-color: darkslategray; border-bottom: 5px solid black;">Meet our Team</button>
+            <button onclick="window.location.href='{% url 'project' %}'">Project Concept</button>
+            <button onclick="window.location.href='{% url 'guide' %}'">Guide</button>
+            <button onclick="window.location.href='{% url 'video' %}'">Demo Video</button>
+        </div>
+    </div>
+
+    <div class="promo-container">
+        <div class="promo">
+            <table>
+              <tr>
+                <th><h2>Eray Dindaş</h2></th>
+                <td><p>21946041, Ankara. Software Architect, Requirement Reviewer of our team. Mainly focused on the Front-end. Shared the role as a Software Developer.</p></td>
+                <td><img src="{% static 'icons/Eray.jpeg' %}" alt="Eray" class="scaled-img"></td>
+              </tr>
+              <tr>
+                <th><h2>Mehmet Giray Nacakcı</h2></th>
+                <td><p>21989009, Antalya. Project Manager, Design-Code Reviewer of our team. Mainly focused on the Backend, Deployment. Shared the role as a Software Developer.</p></td>
+                <td><img src="{% static 'icons/Giray.jpg' %}" alt="Giray" class="scaled-img"></td>
+              </tr>
+              <tr>
+                <th><h2>Enes Yavuz</h2></th>
+                <td><p>21989712, Ankara. Head of User Experience, Test Engineering. Shared the role as a Software Developer. </p></td>
+                <td><img src="{% static 'icons/Enes.jpg' %}" alt="Enes" class="scaled-img"></td>
+              </tr>
+            </table>
+          </div>
+    </div>
+    <br>
+    <footer>
+        <p>Copyright &copy; 2023 Hacettepe University - Computer Engineering</p>
+    </footer>
+</body>
+</html>

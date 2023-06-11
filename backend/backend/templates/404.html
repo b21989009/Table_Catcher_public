@@ -1,0 +1,46 @@
+<!--- http 404 error: "not found": user typed wrong url (non-existent path).
+Django responds to such request with this page. -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<title>Table Catcher 404</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="{% static 'icons/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'website_style.css' %}">
+</head>
+<body>
+
+    <div class="content">
+
+        <h1 style="color: yellow; font-size: 5em; font-family: sans-serif; margin-bottom: 0;">
+            404
+        </h1>
+
+        <h2 style="color: yellow; font-family: sans-serif;">
+            We can catch Tables, but not this URL.
+            <br><br>
+        </h2>
+
+        <div class="button-container">
+            <button onclick="window.location.href='{% url 'main' %}'">Go back to Homepage</button>
+        </div>
+
+        <div class="image-container2">
+            <figure>
+                <img src="{% static 'icons/logo.png' %}" alt="logo" style="width: 300px" width="400">
+                <figcaption class="image-caption">Table Catcher</figcaption>
+            </figure>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Copyright &copy; 2023 Hacettepe University - Computer Engineering</p>
+    </footer>
+</body>
+</html>
+
+
+
