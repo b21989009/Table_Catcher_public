@@ -19,6 +19,12 @@ https://tablecatcher.azurewebsites.net
 <br />
 <br />
 
+We developed a Chrome Extension named TableCatcher that detects standard (<table> tag) and non-standard formats of tabular data on Webpages, downloads as Excel/CSV files.
+Back-end runs on Django (Python), with use of some tabulation (pandas) and vision (img2table) libraries. 
+
+<br />
+<br />
+
 ## How to Install On Your Browser:
 
 
